@@ -4,14 +4,19 @@ const session = require('express-session');
 const passport = require('passport');
 require('./auth');
 
-//middlewawre to give access?
+//middlewawre to check if user is logged in (protects routes)
 function isLoggedIn(req, res, next) {
  req.user ? next() : res.sendStatus(401);
 }
 
 const app = express();
-app.use(session({ secret: "cats" })); //cookie for session must be placed before passport initialize and session
+
+// session middleware (must come before passport.initialize + passport.session)
+// stores session info in a cookie so login can persist
+app.use(session({ secret: "cats" }));
+
 app.use(passport.initialize());
+// connects passport to the session
 app.use(passport.session());
 
 //Homepage to login

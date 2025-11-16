@@ -14,12 +14,14 @@ passport.use(new GoogleStrategy({
   }
 ));
 
-
-//Still needs to understand what this does
+// Runs when user logs in
+// Stores the user info into the session + adds state protocol (HTTP stateless) so they stay logged in
 passport.serializeUser(function(user, done) {
-    done(null, user);
+  done(null, user);
 });
 
+// Runs on every request after login
+// Retrieves the stored user info from the session
 passport.deserializeUser(function(user, done) {
-    done(null, user);
-})
+  done(null, user);
+});
